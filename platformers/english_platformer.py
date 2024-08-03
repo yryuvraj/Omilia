@@ -20,7 +20,7 @@ from platformers.platformer_base import (
 class EnglishPlatformer(Platformer):
     def __init__(self):
         super().__init__()
-        init_level = 0  
+        init_level = 0
         if path.exists(f"English/level{init_level}_data"):
             pickle_in = open(f"English/level{init_level}_data", "rb")
             world_data = pickle.load(pickle_in)

@@ -13,9 +13,7 @@ from GameEnding import endscreen
 
 
 class World:
-    def __init__(
-        self, world_data, language: Language, fx: LanguageFx, images: LanguageImages
-    ):
+    def __init__(self, world_data, language: Language, fx: LanguageFx, images: LanguageImages):
         self.coin_group = pygame.sprite.Group()
         self.lava_group = pygame.sprite.Group()
         self.exit_group = pygame.sprite.Group()
@@ -25,9 +23,7 @@ class World:
         self.world_data = world_data
         self.images = images
         self.fx = fx
-        self.player = Player(
-            100, PlatformerConfig.screen_height - 130, language, self.images, self.fx
-        )
+        self.player = Player(100, PlatformerConfig.screen_height - 130, language, self.images, self.fx)
         pygame.mixer.music.load(self.fx.bg_music_path)
         pygame.mixer.music.play(-1)
         row_count = 0
@@ -36,18 +32,14 @@ class World:
             col_count = 0
             for tile in row:
                 if tile == 1:
-                    img = pygame.transform.scale(
-                        self.images.dirt_img, (tile_size, tile_size)
-                    )
+                    img = pygame.transform.scale(self.images.dirt_img, (tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
                     tile = (img, img_rect)
                     self.tile_list.append(tile)
                 if tile == 2:
-                    img = pygame.transform.scale(
-                        self.images.grass_img, (tile_size, tile_size)
-                    )
+                    img = pygame.transform.scale(self.images.grass_img, (tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
@@ -132,14 +124,10 @@ class World:
         # check for collision with boundary
         for tile in self.tile_list:
             # check for collision in x direction
-            if tile[1].colliderect(
-                player.rect.x + player.dx, player.rect.y, player.width, player.height
-            ):
+            if tile[1].colliderect(player.rect.x + player.dx, player.rect.y, player.width, player.height):
                 player.dx = 0
             # check for collision in y direction
-            if tile[1].colliderect(
-                player.rect.x, player.rect.y + player.dy, player.width, player.height
-            ):
+            if tile[1].colliderect(player.rect.x, player.rect.y + player.dy, player.width, player.height):
                 # check if below the ground i.e. jumping
                 if player.vel_y < 0:
                     player.dy = tile[1].bottom - player.rect.top
@@ -153,26 +141,16 @@ class World:
         # check for collision with platforms
         for platform in self.platform_group:
             # collision in the x direction
-            if platform.rect.colliderect(
-                player.rect.x + player.dx, player.rect.y, player.width, player.height
-            ):
+            if platform.rect.colliderect(player.rect.x + player.dx, player.rect.y, player.width, player.height):
                 player.dx = 0
             # collision in the y direction
-            if platform.rect.colliderect(
-                player.rect.x, player.rect.y + player.dy, player.width, player.height
-            ):
+            if platform.rect.colliderect(player.rect.x, player.rect.y + player.dy, player.width, player.height):
                 # check if below platform
-                if (
-                    abs((player.rect.top + player.dy) - platform.rect.bottom)
-                    < player.col_thresh
-                ):
+                if abs((player.rect.top + player.dy) - platform.rect.bottom) < player.col_thresh:
                     player.vel_y = 0
                     player.dy = platform.rect.bottom - player.rect.top
                 # check if above platform
-                elif (
-                    abs((player.rect.bottom + player.dy) - platform.rect.top)
-                    < player.col_thresh
-                ):
+                elif abs((player.rect.bottom + player.dy) - platform.rect.top) < player.col_thresh:
                     player.rect.bottom = platform.rect.top - 1
                     player.in_air = False
                     player.dy = 0
@@ -269,15 +247,11 @@ class Platformer:
             if self.platformer_state == PlatformerState.QUIT:
                 pygame.quit()
 
-                
-
             if self.platformer_state == PlatformerState.PLAYING_LEVEL:
                 self.platformer_state = self.play_level(current_level)
 
             if self.platformer_state == PlatformerState.QUESTION:
-                question_state = self.play_question(
-                    current_level, first=self.first_pass
-                )
+                question_state = self.play_question(current_level, first=self.first_pass)
                 match question_state:
                     case QuestionState.CORRECT:
                         current_level += 1
@@ -460,8 +434,6 @@ class Platformer:
             self.world.player.left()
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.world.player.right()
-        if (keys[pygame.K_LEFT] is False or keys[pygame.K_a]) and (
-            keys[pygame.K_RIGHT] is False or keys[pygame.K_d]
-        ):
+        if (keys[pygame.K_LEFT] is False or keys[pygame.K_a]) and (keys[pygame.K_RIGHT] is False or keys[pygame.K_d]):
             self.world.player.reset_counter()
         self.world.player.animate()
