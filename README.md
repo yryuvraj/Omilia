@@ -1,4 +1,4 @@
-# Omilia
+# Omilia v1
 ## Promoting fun learning with Omilia
 Omilia is a retro-themed game inspired from platform games popular in the 90s with an added feature which makes it an educational game.This feature involves a set of questions in different languages which are asked after the player completes each level. TO move to the next level the player must give the right answer.
 
